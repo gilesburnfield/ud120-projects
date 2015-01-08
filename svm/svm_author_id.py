@@ -21,13 +21,12 @@ from email_preprocess import preprocess
 ### labels_train and labels_test are the corresponding item labels
 features_train, features_test, labels_train, labels_test = preprocess()
 
-print features_train[2:4]
 
 from sklearn.svm import SVC
-clf = SVC(kernel="linear")
+clf = SVC(kernel="rbf", C = 10000)
 
-features_train = features_train[:len(features_train)/100] 
-labels_train = labels_train[:len(labels_train)/100] 
+#features_train = features_train[:len(features_train)/100] 
+#labels_train = labels_train[:len(labels_train)/100] 
 
 t0 = time()
 clf.fit(features_train, labels_train)
@@ -37,15 +36,17 @@ t1 = time()
 pred = clf.predict(features_test)
 print "prediction time", round(time()-t1, 3), "s"
 
+
+for x in [10,26,50]:
+    print x , pred[x]
+
+# how many are predicted chriss
+
+print sum(pred)
+
+
+
 from sklearn.metrics import accuracy_score
 print accuracy_score(pred, labels_test)
-
-
-
-
-#########################################################
-### your code goes here ###
-
-#########################################################
 
 
